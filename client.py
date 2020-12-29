@@ -1,10 +1,12 @@
 import socket
 import subprocess
 
+SOCKET = 8000
+
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
 socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-socket.bind(('0.0.0.0', 8000))
+socket.bind(('0.0.0.0', SOCKET))
 
 # Accept a single connection and make a file-like object out of it
 try:
@@ -22,6 +24,5 @@ try:
             break
         player.stdin.write(data)
 finally:
-    connection.close()
     socket.close()
     player.terminate()
