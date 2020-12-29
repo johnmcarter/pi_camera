@@ -5,10 +5,11 @@ import time
 import picamera
 
 SOCKET = 8000
+HOST = '192.168.4.95'
 
 try:
     socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    socket.connect(('192.168.4.162', SOCKET))
+    socket.connect((HOST, SOCKET))
 except:
     print("Unable to bind to socket %s" % SOCKET)
     exit()
