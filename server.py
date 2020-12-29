@@ -1,14 +1,20 @@
+# https://github.com/waveform80/picamera/issues/226
+
 import socket
 import time
 import picamera
 
-# Connect a client socket to my_server:8000 (change my_server to the
-# hostname of your server)
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-client_socket.connect(('my_server', 8000))
+SOCKET = 8000
+
+try:
+    socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    socket.connect(('192.168.4.162', SOCKET))
+except:
+    print("Unable to bind to socket %s" % SOCKET)
+    exit()
 
 # Make a file-like object out of the connection
-connection = client_socket.makefile('wb')
+connection = socket.makefile('wb')
 try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)
@@ -23,4 +29,4 @@ try:
         camera.stop_recording()
 finally:
     connection.close()
-    client_socket.close()
+    socket.close()
